@@ -1,0 +1,72 @@
+#! /usr/bin/env python
+
+import json
+import sys
+
+
+def read_json_data(filename):
+  """
+  Reads JSON data from a specified file.
+
+  Args:
+      filename: The path to the JSON file.
+
+  Returns:
+      A Python dictionary containing the parsed JSON data, 
+      or None if an error occurs.
+  """
+
+  try:
+    with open(filename, 'r') as file:
+      data = json.load(file)
+      return data
+  except FileNotFoundError:
+    print(f"Error: File not found: {filename}")
+  except json.JSONDecodeError:
+    print(f"Error: Invalid JSON data in file: {filename}")
+  return None
+
+
+def format_json_data(data_dict):
+  """
+  Formats the JSON data as a single line with capitalized keys.
+
+  Args:
+      data_dict: A dictionary containing the parsed JSON data.
+
+  Returns:
+      A formatted string with key-value pairs separated by tabs.
+  """
+
+  formatted_string = ""
+  for key, value in data_dict.items():
+    formatted_key = key.title()
+    formatted_string += f"{formatted_key:<15}{value}\t"
+  return formatted_string.rstrip("\t")
+
+
+def main():
+  """
+  The main function for the script.
+
+  - Checks for command-line arguments.
+  - Reads JSON data from the specified file.
+  - Formats the data and prints the result.
+  """
+
+  if len(sys.argv) < 2:
+    print("Usage: python script.py <filename.json>")
+    sys.exit(1)
+
+  filename = sys.argv[1]
+  data_dict = read_json_data(filename)
+
+  if data_dict is not None:
+    formatted_data = format_json_data(data_dict)
+    print(formatted_data)
+  else:
+    print("Error: Could not read JSON data from file.")
+
+
+if __name__ == "__main__":
+  main()
