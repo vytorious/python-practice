@@ -29,20 +29,21 @@ def read_json_data(filename):
 
 def format_json_data(data_dict):
   """
-  Formats the JSON data as a single line with capitalized keys.
+  Formats the JSON data as a single line with capitalized keys and 4 spaces between items.
 
   Args:
       data_dict: A dictionary containing the parsed JSON data.
 
   Returns:
-      A formatted string with key-value pairs separated by tabs.
+      A formatted string with key-value pairs separated by 4 spaces.
   """
 
   formatted_string = ""
   for key, value in data_dict.items():
     formatted_key = key.title()
-    formatted_string += f"{formatted_key:<15}{value}\t"
-  return formatted_string.rstrip("\t")
+    # Use string formatting with 4 spaces after each element
+    formatted_string += f"{formatted_key}    {value}    "
+  return formatted_string.rstrip()  # Remove trailing whitespace
 
 
 def main():
